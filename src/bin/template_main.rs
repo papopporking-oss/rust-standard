@@ -26,12 +26,12 @@ struct Args {
     // string_require: String,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
     let current_dir = env::current_dir().unwrap();
     info!("{}", current_dir.display());
     dotenvy::from_path(current_dir.join("configs/.env")).ok();
-    let app_name = env::var("APP_NAME").unwrap();
+    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "DefaultApp".to_string());
     info!("APP_NAME = {}", app_name);
     info!("START");
     let args = Args::parse();
@@ -41,4 +41,5 @@ fn main() {
     println!("string = {:?}", args.string);
     
     info!("END");
+    Ok(())
 }
