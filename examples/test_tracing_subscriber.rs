@@ -5,7 +5,7 @@ target\release\template_main.exe
 
 use std::env;
 use clap::Parser;
-use tracing::{info};
+use tracing::{debug, info, trace};
 use tracing_subscriber::EnvFilter;
 
 #[derive(Parser, Debug)]
@@ -28,18 +28,11 @@ struct Args {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let current_dir = env::current_dir().unwrap();
+    let current_dir = std::env::current_dir().unwrap();
     dotenvy::from_path(current_dir.join("configs/.env")).ok();
     tracing_subscriber::fmt().with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"))).init();
-    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "".to_string());
-    info!("APP_NAME = {}", app_name);
-    info!("START");
-    let args = Args::parse();
-    
-    println!("verbose = {}", args.verbose);
-    println!("dry_run = {}", args.dry_run);
-    println!("string = {:?}", args.string);
-    
-    info!("END");
+    info!("Program started");
+    debug!("This is a debug message");
+    trace!("This is a trace message");
     Ok(())
 }

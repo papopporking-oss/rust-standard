@@ -7,6 +7,7 @@ target\release\template_ui_opencv.exe
 use std::env;
 use clap::Parser;
 use tracing::{info};
+use tracing_subscriber::EnvFilter;
 use opencv::{highgui, imgcodecs, Result};
 
 #[derive(Parser, Debug)]
@@ -29,11 +30,10 @@ struct Args {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::fmt::init();
     let current_dir = env::current_dir().unwrap();
-    info!("{}", current_dir.display());
     dotenvy::from_path(current_dir.join("configs/.env")).ok();
-    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "DefaultApp".to_string());
+    tracing_subscriber::fmt().with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"))).init();
+    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "".to_string());
     info!("APP_NAME = {}", app_name);
     info!("START");
     let args = Args::parse();

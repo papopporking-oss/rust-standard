@@ -1,6 +1,6 @@
 /*
-cargo build --release --bin template_main
-target\release\template_main.exe
+cargo build --release --bin sea_orm_mysql_1_connect
+target\release\sea_orm_mysql_1_connect.exe
 */
 
 use std::env;
@@ -35,10 +35,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("APP_NAME = {}", app_name);
     info!("START");
     let args = Args::parse();
-    
-    println!("verbose = {}", args.verbose);
-    println!("dry_run = {}", args.dry_run);
-    println!("string = {:?}", args.string);
     
     info!("END");
     Ok(())

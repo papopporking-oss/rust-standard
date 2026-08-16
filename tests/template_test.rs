@@ -16,7 +16,7 @@ fn test_integration_flow() -> Result<(), Box<dyn std::error::Error>> {
     let current_dir = env::current_dir().unwrap();
     info!("{}", current_dir.display());
     dotenvy::from_path(current_dir.join("configs/.env")).ok();
-    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "DefaultApp".to_string());
+    let app_name = env::var("APP_NAME").unwrap_or_else(|_| "".to_string());
     info!("APP_NAME = {}", app_name);
     info!("START");
 

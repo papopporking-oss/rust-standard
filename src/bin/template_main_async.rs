@@ -1,5 +1,5 @@
 /*
-cargo build --release --bin template_main
+cargo build --release --bin template_main_async
 target\release\template_main.exe
 */
 
@@ -27,7 +27,8 @@ struct Args {
     // string_require: String,
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let current_dir = env::current_dir().unwrap();
     dotenvy::from_path(current_dir.join("configs/.env")).ok();
     tracing_subscriber::fmt().with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"))).init();
