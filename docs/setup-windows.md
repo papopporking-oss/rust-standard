@@ -8,6 +8,7 @@ cargo check
 cargo build
 cargo build --release
 cargo build --release --bin template_main
+cargo build --release --bin sub_bin_main
 cargo build --release --all-targets
 
 install libary
