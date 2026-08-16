@@ -1,6 +1,6 @@
 /*
-cargo build --release --bin sea_orm_mysql_1_connect
-target\release\sea_orm_mysql_1_connect.exe
+cargo build --release --bin sea_orm_mysql_2_create_table
+target\release\sea_orm_mysql_2_create_table.exe
 */
 
 use std::env;
@@ -28,6 +28,22 @@ struct Args {
     // string_require: String,
 }
 
+async fn create_table(db: &sea_orm::DatabaseConnection) -> Result<(), Box<dyn std::error::Error>> {
+    let sql = r#"
+        CREATE TABLE IF NOT EXISTS test_table_message (
+            id BIGINT AUTO_INCREMENT NOT NULL,
+            create_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            update_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            message VARCHAR(255) NOT NULL,
+            number BIGINT NOT NULL,
+            PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    "#;
+    db.execute_unprepared(sql).await?;
+    info!("Table test_table_message created successfully");
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let current_dir = env::current_dir().unwrap();
@@ -43,6 +59,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Step 2: Connect to MySQL using SeaORM
     let db = Database::connect(&db_url).await?;
+
+    // Step 3: Create table
+    create_table(&db).await?;
     
     info!("END");
     Ok(())

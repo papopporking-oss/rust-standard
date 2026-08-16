@@ -6,6 +6,7 @@ target\release\sub_bin_main_2_module_use.exe
 use std::env;
 use clap::Parser;
 use tracing::{info};
+use tracing_subscriber::EnvFilter;
 
 mod add_numbers;
 mod print_custom_message;

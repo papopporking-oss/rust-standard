@@ -9,3 +9,10 @@ dotenvy = "0.15.7"
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.23", features = ["env-filter", "fmt"] }
 tokio = { version = "1", features = ["full"] }
+sea-orm = { version = "2.0.2", features = [
+    "sqlx-postgres",
+    "sqlx-mysql",
+    "sqlx-sqlite",
+    "runtime-tokio-native-tls",
+    "macros",
+] }

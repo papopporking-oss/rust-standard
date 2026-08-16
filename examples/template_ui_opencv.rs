@@ -1,7 +1,6 @@
 /*
-cargo clean
-cargo build --release --bin template_ui_opencv
-target\release\template_ui_opencv.exe
+cargo build --example template_ui_opencv --release
+cargo run --example template_ui_opencv
 */
 
 use std::env;
