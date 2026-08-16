@@ -1,7 +1,7 @@
 /*
 cd C:\Users\papop\projects\rust-standard
-cargo build --example template_ui_opencv_1_mp4 --release
-cargo run --example template_ui_opencv_1_mp4
+cargo build --example template_ui_opencv_2_mp4 --release
+cargo run --example template_ui_opencv_2_mp4
 */
 
 use std::env;

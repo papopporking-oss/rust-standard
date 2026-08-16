@@ -16,3 +16,4 @@ sea-orm = { version = "2.0.2", features = [
     "runtime-tokio-native-tls",
     "macros",
 ] }
+oracle = { version = "0.6.3", features = ["chrono"] }

@@ -1,0 +1,48 @@
+[package]
+name = "rust-standard"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4.6.6", features = ["derive"] }
+dotenvy = "0.15.7"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter", "fmt"] }
+tokio = { version = "1", features = ["full"] }
+
+# Structured Data (CSV, JSON, XML)
+# csv: Reading and writing CSV data
+csv = "1.4.0"
+# serde: Framework for serializing and deserializing Rust data structures
+serde = { version = "1.0.229", features = ["derive"] }
+# serde_json: JSON support for serde
+serde_json = "1.0.151"
+# quick-xml: High-performance XML reader/writer
+quick-xml = "0.41.0"
+ 
+# Spreadsheets & Documents (Excel, PDF, DOCX, PPTX, EPUB)
+# calamine: Pure Rust library for reading Excel files (xls, xlsx, ods)
+calamine = "0.36.1"
+# pdf_oxide & lopdf: Libraries for PDF document manipulation
+pdf_oxide = "0.3.77"
+lopdf = "0.44.0"
+pptx = "0.1.0"
+epub = "2.1.5"
+ 
+# Archives, Images & File Inspection
+# zip: Support for ZIP archives
+zip = "8.6.0"
+# image: Imaging library for processing common formats (PNG, JPEG, WebP, GIF)
+image = "0.25.10"
+# file-format: Identify file types by inspecting their magic bytes
+file-format = "0.29.0"
+ 
+# Dataframes & Large Data (Parquet, Polars)
+# parquet: Read and write Apache Parquet files
+parquet = "59.2.0"
+# polars: Fast multi-threaded DataFrames library
+polars = { version = "0.55.2", features = ["lazy", "parquet", "csv", "json"] }
+ 
+# Unified Multi-format Document Extraction
+# deformat: Extract text content from multiple document formats
+deformat = "0.15.3"
