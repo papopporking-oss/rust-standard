@@ -1,13 +1,14 @@
 /*
-cargo build --example template_ui_opencv --release
-cargo run --example template_ui_opencv
+cargo build --example template_ui_opencv_linux --release
+cargo run --example template_ui_opencv_linux
 */
 
 use std::env;
 use clap::Parser;
 use tracing::{info};
 use tracing_subscriber::EnvFilter;
-use opencv::{highgui, imgcodecs, Result};
+use opencv::{core, imgcodecs, imgproc, prelude::MatTraitConst, Result};
+use chrono::Local;
 
 #[derive(Parser, Debug)]
 struct Args {
@@ -45,9 +46,37 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Loading image from: {}", image_path.display());
     let image_path_str = image_path.to_str().expect("Invalid path string");
     let img = imgcodecs::imread(image_path_str, imgcodecs::IMREAD_COLOR)?;
-    highgui::imshow("Test OpenCV Window", &img)?;
-    highgui::wait_key(0)?;
-    
+
+    println!("Image loaded successfully");
+    println!("Image width = {}", img.cols());
+    println!("Image height = {}", img.rows());
+
+    let mut test_img = core::Mat::new_rows_cols_with_default(
+        500,
+        800,
+        core::CV_8UC3,
+        core::Scalar::new(255.0, 255.0, 255.0, 0.0),
+    )?;
+
+    let datetime_now = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
+    imgproc::put_text(
+        &mut test_img,
+        &format!("Datetime: {}", datetime_now),
+        core::Point::new(100, 250),
+        imgproc::FONT_HERSHEY_SIMPLEX,
+        0.6,
+        core::Scalar::new(0.0, 0.0, 0.0, 0.0),
+        1,
+        imgproc::LINE_AA,
+        false,
+    )?;
+
+    let output_path = current_dir.join("static/test-opencv.jpg");
+    let output_path_str = output_path.to_str().expect("Invalid path string");
+    imgcodecs::imwrite(output_path_str, &test_img, &core::Vector::new())?;
+
+    println!("OpenCV test image saved to: {}", output_path.display());
+
     info!("END");
     Ok(())
 }
